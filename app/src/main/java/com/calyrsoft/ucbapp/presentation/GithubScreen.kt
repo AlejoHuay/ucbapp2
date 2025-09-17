@@ -12,17 +12,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 @Composable
-fun GithubScreen(modifier: Modifier) {
+fun GithubScreen( modifier: Modifier ) {
+
     var nickname by remember { mutableStateOf("") }
 
     Column {
-        Text("")
+        Text("" )
         OutlinedTextField(
             value = nickname,
             onValueChange = {
-                    it ->
-                nickname = it
-            },
+                it -> nickname = it
+            }
         )
         OutlinedButton(onClick = {
             //
