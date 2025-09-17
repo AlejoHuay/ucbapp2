@@ -1,9 +1,13 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
     id("io.sentry.android.gradle") version "5.11.0"
+    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -25,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -38,6 +42,33 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+}
+kapt {
+    correctErrorTypes = true
+}
+
+ktlint {
+    android = true
+    outputColorName = "RED"
+    verbose = true
+    ignoreFailures = true
+    enableExperimentalRules = true
+    // baseline = file("$projectDir/config/ktlint/baseline.xml")
+
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.SARIF)
+    }
+
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
     }
 }
 
