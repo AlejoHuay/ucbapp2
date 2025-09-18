@@ -19,7 +19,7 @@ import coil3.compose.AsyncImage
 
 @Composable
 fun GithubScreen( modifier: Modifier,
-                  vm : GithubViewModel = koinViewModel()
+                  vm : GithubViewModel = koinViewModel() // le decimos a koin que el sera el que busque las dependencias que nescesita el viewModel
                 ) {
 
     var nickname by remember { mutableStateOf("") }

@@ -8,7 +8,7 @@ import org.koin.core.context.startKoin
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin {
+        startKoin { // agreamos dependencias de koin
             androidContext(this@App)
             modules(appModule)
         }
