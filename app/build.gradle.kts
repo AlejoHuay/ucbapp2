@@ -60,6 +60,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.retrofit)
     implementation(libs.glide)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
 }
 
 sentry {
