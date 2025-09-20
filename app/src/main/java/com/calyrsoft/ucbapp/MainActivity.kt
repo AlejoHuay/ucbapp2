@@ -8,15 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.calyrsoft.ucbapp.presentation.GithubScreen
+import com.calyrsoft.ucbapp.features.github.presentation.GithubScreen
+import com.calyrsoft.ucbapp.navigation.AppNavigation
 import com.calyrsoft.ucbapp.ui.theme.UcbappTheme
-import io.sentry.Sentry
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     // waiting for view to draw to better represent a captured error with a screenshot
-    findViewById<android.view.View>(android.R.id.content).viewTreeObserver.addOnGlobalLayoutListener {
+    //findViewById<android.view.View>(android.R.id.content).viewTreeObserver.addOnGlobalLayoutListener {
 
       // Bloque de prueba agregado automáticamente por el wizard de Sentry
       /*try {
@@ -24,15 +24,16 @@ class MainActivity : ComponentActivity() {
       } catch (e: Exception) {
         Sentry.captureException(e)
       }*/
-    }
+    //}
 
         enableEdgeToEdge()
         setContent {
-            UcbappTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    GithubScreen(modifier = Modifier.padding(innerPadding))
-                }
-            }
+            //UcbappTheme {
+                //Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    //GithubScreen(modifier = Modifier.padding(innerPadding))
+                //}
+            //}
+            AppNavigation()
         }
     }
 }

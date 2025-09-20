@@ -1,4 +1,4 @@
-package com.calyrsoft.ucbapp.presentation
+package com.calyrsoft.ucbapp.features.github.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size

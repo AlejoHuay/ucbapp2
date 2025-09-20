@@ -1,0 +1,44 @@
+package com.calyrsoft.ucbapp.features.profile.application
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.calyrsoft.ucbapp.features.profile.domain.model.ProfileModel
+import com.calyrsoft.ucbapp.features.profile.domain.usecase.GetProfileUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import org.koin.core.logger.MESSAGE
+
+class ProfileViewModel(
+    val profileUseCase: GetProfileUseCase
+): ViewModel() {
+    // UI STATE
+    sealed class ProfileUiState{
+        object Init: ProfileUiState()
+        object Loading: ProfileUiState()
+        class Error(val message: String): ProfileUiState()
+        class Success(val profile: ProfileModel): ProfileUiState()
+    }
+
+    //  VARIABLE MUTABLE Y OBSERVABLE
+    private var _state = MutableStateFlow<ProfileUiState>(ProfileUiState.Init)
+    val state : StateFlow<ProfileUiState> = _state.asStateFlow()
+
+    // EVENTO O EVENTOS DESECADENADORES
+    fun showProfile(){
+        viewModelScope.launch(Dispatchers.IO) { // cambiamos del hilo principal al de entrada y salida por el servicio que consumiremos
+            _state.value = ProfileUiState.Loading
+            val resultProfile = profileUseCase.invoke()
+            resultProfile.fold(
+                onSuccess = {
+                    _state.value = ProfileUiState.Success(it)
+                },
+                onFailure = {
+                    _state.value = ProfileUiState.Error(it.message.toString())
+                }
+            )
+        }
+    }
+}
