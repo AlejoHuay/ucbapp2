@@ -36,28 +36,3 @@ class GithubRepository(
         )
     }
 }
-
-
-/*lass GithubRepository(
-    val remoteDataSource: GithubRemoteDataSource
-): IGithubRepository {
-    override suspend fun findByNick(value: String): Result<UserModel> {
-        if(value.isEmpty()) {
-            return Result.failure(Exception("El campo no puede estar vacio"))
-        }
-        val response = remoteDataSource.getUser(value)
-
-        response.fold(
-            onSuccess = {
-                    it ->
-                return Result.success(UserModel(
-                    nickname = it.login,
-                    pathUrl = it.url
-                ))
-            },
-            onFailure = {
-                return Result.failure(it)
-            }
-        )
-    }
-}*/
