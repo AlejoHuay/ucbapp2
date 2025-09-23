@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.navigation)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.converter.gson)
 }
 
 sentry {

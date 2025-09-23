@@ -1,6 +1,8 @@
 package com.calyrsoft.ucbapp.di
 
 
+import com.calyrsoft.ucbapp.features.github.data.api.GithubService
+import com.calyrsoft.ucbapp.features.github.data.datasource.GithubRemoteDataSource
 import com.calyrsoft.ucbapp.features.github.data.repository.GithubRepository
 import com.calyrsoft.ucbapp.features.github.domain.repository.IGithubRepository
 import com.calyrsoft.ucbapp.features.github.domain.usecase.FindByNickNameUseCase
@@ -9,15 +11,45 @@ import com.calyrsoft.ucbapp.features.profile.application.ProfileViewModel
 import com.calyrsoft.ucbapp.features.profile.data.repository.ProfileRepository
 import com.calyrsoft.ucbapp.features.profile.domain.repository.IProfileRepository
 import com.calyrsoft.ucbapp.features.profile.domain.usecase.GetProfileUseCase
+import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val appModule = module{ // definimos como se van a llamar a las dependencias que se van a nescesitar
-    single<IGithubRepository>{ GithubRepository() }
-    factory { FindByNickNameUseCase(get()) }
-    viewModel { GithubViewModel(get()) }
+    // OkHttpClient
+    single {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
 
-    viewModel { ProfileViewModel(get()) }
-    factory { GetProfileUseCase(get()) }
+    // Retrofit
+    single {
+        Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    // GithubService
+    single<GithubService> {
+        get<Retrofit>().create(GithubService::class.java)
+    }
+
+    single { GithubRemoteDataSource(get()) }
+    single<IGithubRepository>{ GithubRepository(get()) }
+
+    factory { FindByNickNameUseCase(get()) }
+    viewModel { GithubViewModel(get (),get ()) }
+
     single<IProfileRepository> { ProfileRepository() }
+    factory { GetProfileUseCase(get()) }
+    viewModel { ProfileViewModel(get()) }
+
 }
