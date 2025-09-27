@@ -1,8 +1,10 @@
 package com.calyrsoft.ucbapp.di
 
 
+import com.calyrsoft.ucbapp.features.dollar.data.database.AppRoomDatabase
+import com.calyrsoft.ucbapp.features.dollar.data.datasource.DollarLocalDataSource
 import com.calyrsoft.ucbapp.features.dollar.data.repository.DollarRepository
-import com.calyrsoft.ucbapp.features.dollar.datasource.RealTimeRemoteDataSource
+import com.calyrsoft.ucbapp.features.dollar.data.datasource.RealTimeRemoteDataSource
 import com.calyrsoft.ucbapp.features.dollar.domain.repository.IDollarRepository
 import com.calyrsoft.ucbapp.features.dollar.domain.usecase.FetchDollarUseCase
 import com.calyrsoft.ucbapp.features.dollar.presentation.DollarViewModel
@@ -57,11 +59,11 @@ val appModule = module{ // definimos como se van a llamar a las dependencias que
     factory { GetProfileUseCase(get()) }
     viewModel { ProfileViewModel(get()) }
 
+    single { AppRoomDatabase.getDatabase(get()) }
+    single { get<AppRoomDatabase>().dollarDao() }
     single { RealTimeRemoteDataSource() }
-    //single<IDollarRepository> { DollarRepository() }
-    single<IDollarRepository> {
-        DollarRepository(realTimeRemoteDataSource = get())
-    }
+    single { DollarLocalDataSource(get()) }
+    single<IDollarRepository> { DollarRepository(get(), get()) }
     factory { FetchDollarUseCase(get()) }
     viewModel{ DollarViewModel(get()) }
 

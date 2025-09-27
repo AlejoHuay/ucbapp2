@@ -5,6 +5,7 @@ plugins {
 
     id("io.sentry.android.gradle") version "5.11.0"
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -68,6 +69,13 @@ dependencies {
     implementation(libs.koin.androidx.navigation)
     implementation(libs.koin.androidx.compose)
     implementation(libs.converter.gson)
+    //local bundle room
+    implementation(libs.bundles.local)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+    testImplementation(libs.room.testing)
+
+
 }
 
 sentry {

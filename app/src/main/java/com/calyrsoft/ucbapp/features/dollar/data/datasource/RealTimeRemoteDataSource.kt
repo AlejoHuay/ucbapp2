@@ -1,4 +1,4 @@
-package com.calyrsoft.ucbapp.features.dollar.datasource
+package com.calyrsoft.ucbapp.features.dollar.data.datasource
 
 import com.calyrsoft.ucbapp.features.dollar.domain.model.DollarModel
 import com.google.firebase.Firebase
