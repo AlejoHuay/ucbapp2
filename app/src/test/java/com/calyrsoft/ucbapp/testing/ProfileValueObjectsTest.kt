@@ -13,13 +13,13 @@ class ProfileValueObjectsTest {
 
     // -------- ProfileName --------
     @Test
-    fun ProfileNameaceptanombresnovacios() {
+    fun ProfileNameaceptanombresquenoestenvacios() {
         val vo = ProfileName("Homero")
         assertEquals("Homero", vo.value)
     }
 
     @Test
-    fun ProfileNamefallasiestavacio() {
+    fun ProfileNamefallacunadoestavacio() {
         try {
             ProfileName("")
             fail("Debió lanzar IllegalArgumentException")
@@ -36,7 +36,7 @@ class ProfileValueObjectsTest {
     }
 
     @Test
-    fun ProfileEmailfallasiformatoesinvalido() {
+    fun ProfileEmailiformatoesinvalido() {
         try {
             ProfileEmail("correo-invalido")
             fail("Debió lanzar IllegalArgumentException")
@@ -47,13 +47,13 @@ class ProfileValueObjectsTest {
 
     // -------- ProfilePhone --------
     @Test
-    fun ProfilePhoneaceptaformatointernacionalsimple() {
+    fun ProfilePhoneaceptaformatosimple() {
         val vo = ProfilePhone("+19395557422")
         assertEquals("+19395557422", vo.value)
     }
 
     @Test
-    fun ProfilePhonefallasiformatoesinvalido() {
+    fun ProfilePhoneiformatoesinvalido() {
         try {
             ProfilePhone("abc-123")
             fail("Debió lanzar IllegalArgumentException")
@@ -64,7 +64,7 @@ class ProfileValueObjectsTest {
 
     // -------- ProfileSummary --------
     @Test
-    fun ProfileSummaryaceptacualquiertexto() {
+    fun ProfileSummaryaceptatextocualquiera() {
         val vo = ProfileSummary("Inspector de la planta nuclear")
         assertEquals("Inspector de la planta nuclear", vo.value)
     }
