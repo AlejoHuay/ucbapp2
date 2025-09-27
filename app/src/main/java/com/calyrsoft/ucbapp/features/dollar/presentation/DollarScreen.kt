@@ -68,8 +68,8 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
 
                     DollarCard(title = "Oficial", value = stateValue.data.dollarOfficial)
                     DollarCard(title = "Paralelo", value = stateValue.data.dollarParallel)
-                    DollarCard(title = "USDT", value = stateValue.data.dollarCompra)
-                    DollarCard(title = "USDC", value = stateValue.data.dollarVenta)
+                    DollarCard(title = "compra", value = stateValue.data.dollarCompra)
+                    DollarCard(title = "venta", value = stateValue.data.dollarVenta)
 
                     Spacer(modifier = Modifier.height(24.dp))
 
